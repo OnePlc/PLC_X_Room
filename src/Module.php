@@ -55,11 +55,22 @@ class Module {
                     $tableGateway = $container->get(Model\RoomTableGateway::class);
                     return new Model\RoomTable($tableGateway,$container);
                 },
+                # Room Module - Base Model
+                Model\FurnitureTable::class => function($container) {
+                    $tableGateway = $container->get(Model\FurnitureTableGateway::class);
+                    return new Model\FurnitureTable($tableGateway,$container);
+                },
                 Model\RoomTableGateway::class => function ($container) {
                     $dbAdapter = $container->get(AdapterInterface::class);
                     $resultSetPrototype = new ResultSet();
                     $resultSetPrototype->setArrayObjectPrototype(new Model\Room($dbAdapter));
                     return new TableGateway('room', $dbAdapter, null, $resultSetPrototype);
+                },
+                Model\FurnitureTableGateway::class => function ($container) {
+                    $dbAdapter = $container->get(AdapterInterface::class);
+                    $resultSetPrototype = new ResultSet();
+                    $resultSetPrototype->setArrayObjectPrototype(new Model\Furniture($dbAdapter));
+                    return new TableGateway('room_furniture', $dbAdapter, null, $resultSetPrototype);
                 },
             ],
         ];
@@ -89,6 +100,17 @@ class Module {
                     return new Controller\RoomController(
                         $oDbAdapter,
                         $container->get(Model\RoomTable::class),
+                        $container
+                    );
+                },
+                # Furniture Main Controller
+                Controller\FurnitureController::class => function($container) {
+                    $oDbAdapter = $container->get(AdapterInterface::class);
+                    # hook plugin
+
+                    return new Controller\FurnitureController(
+                        $oDbAdapter,
+                        $container->get(Model\FurnitureTable::class),
                         $container
                     );
                 },

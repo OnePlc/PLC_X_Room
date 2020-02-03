@@ -17,7 +17,7 @@ namespace OnePlace\Room\Model;
 
 use Application\Model\CoreEntityModel;
 
-class Room extends CoreEntityModel {
+class Furniture extends CoreEntityModel {
     public $label;
 
     /**
@@ -30,7 +30,7 @@ class Room extends CoreEntityModel {
         parent::__construct($oDbAdapter);
 
         # Set Single Form Name
-        $this->sSingleForm = 'room-single';
+        $this->sSingleForm = 'roomfurniture-single';
 
         # Attach Dynamic Fields to Entity Model
         $this->attachDynamicFields();
@@ -43,16 +43,10 @@ class Room extends CoreEntityModel {
      * @since 1.0.0
      */
     public function exchangeArray(array $aData) {
-        $this->id = !empty($aData['Room_ID']) ? $aData['Room_ID'] : 0;
+        $this->id = !empty($aData['Furniture_ID']) ? $aData['Furniture_ID'] : 0;
         $this->label = !empty($aData['label']) ? $aData['label'] : '';
 
         $this->updateDynamicFields($aData);
-    }
-
-    public function getFurniture() {
-        $oFurnitureTavle = CoreController::$oServiceManager->get(\OnePlace\Skeleton\Model\FurnitureTable::class);
-        $oItemsDB = $this->oTableGateway->fetchAll(false);
-        return $oItemsDB;
     }
 
 }

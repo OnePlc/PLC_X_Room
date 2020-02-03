@@ -94,6 +94,34 @@ return [
                     ],
                 ],
             ],
+            'roomfurniture' => [
+                'type'    => Segment::class,
+                'options' => [
+                    'route' => '/room/furniture[/:action[/:id]]',
+                    'constraints' => [
+                        'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                        'id'     => '[0-9]+',
+                    ],
+                    'defaults' => [
+                        'controller' => Controller\FurnitureController::class,
+                        'action'     => 'index',
+                    ],
+                ],
+            ],
+            'roomfurniture-api' => [
+                'type'    => Segment::class,
+                'options' => [
+                    'route' => '/room/furniture/api[/:action[/:id]]',
+                    'constraints' => [
+                        'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                        'id'     => '[0-9]+',
+                    ],
+                    'defaults' => [
+                        'controller' => Controller\FurnitureApiController::class,
+                        'action'     => 'index',
+                    ],
+                ],
+            ],
         ],
     ],
 
